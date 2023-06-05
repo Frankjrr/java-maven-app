@@ -1,1 +1,1 @@
-echo "This run seccesfully"
+npm --version
