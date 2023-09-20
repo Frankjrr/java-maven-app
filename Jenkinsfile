@@ -1,18 +1,9 @@
 pipeline {
     agent any
-    stages {
-        stage("init") {
-            steps {
-                script {
-                   sh 'npm --version'
-                }
-            }
-        }
         stage("build jar") {
             steps {
                 script {
                     echo "building jar"
-                   
                 }
             }
         }
@@ -20,17 +11,19 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    
                 }
             }
         }
         stage("deploy") {
+            input(message: 'Do you want to proceed?',
+            ok: 'Yes',
+            parameters: [booleanParam(defaultValue: true, description: 'Proceed?')])
             steps {
                 script {
                     echo "deploying the image"
-                   
+
                 }
             }
         }
-    }   
+    }
 }
