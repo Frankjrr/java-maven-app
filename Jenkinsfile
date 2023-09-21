@@ -19,6 +19,12 @@
                 }
             }
             stage("build image") {
+                input{
+                    message "Do you want to proceed?"
+                    ok "Yes"
+                    parameters {
+                        choice(name: 'VERSION', choices: ['1', '2', '3'], description: 'Select the version')
+                }}
                 steps {
                     script {
                     echo "building image"
@@ -39,4 +45,4 @@
                 }
             }
         }
-    }
+    
