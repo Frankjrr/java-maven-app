@@ -5,6 +5,11 @@ pipeline {
     }
     stages {
         stage("build jar") {
+            when {
+                    expression { // Condition to determine if the stage should run
+                        BRANCH_NAME='master'
+                    } 
+                }
             steps {
                 script {
                     echo "building jar"
