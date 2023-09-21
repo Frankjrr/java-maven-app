@@ -19,11 +19,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsID: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo "Username: $USERNAME"'
                     sh 'echo "Password: $PASSWORD"'
-                }
                     sh 'docker build -t hassantariq14351/demo-app:aht-1 .'
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
                     sh 'docker push  hassantariq14351/demo-app:aht-1'
-
+                }
                 }
             }
         }
