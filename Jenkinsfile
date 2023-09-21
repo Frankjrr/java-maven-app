@@ -8,10 +8,10 @@
         }
         
         stages {
-            environment {
-                    MY_VAR = '2.23'
-                }
             stage("build jar") {
+                environment {
+                                    MY_VAR = '2.23'
+                }
                 steps {
                     script {
                         echo "building jar for  version = $MY_VAR"
