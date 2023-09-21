@@ -28,10 +28,10 @@
                 }
             }
             stage("deploy") {
-                parameters {
-                        choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select the environment')
-                    }
                 steps {
+                    parameters {
+                         choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select the environment')
+                    }
                     script {
                         echo "deploying the image"
                         echo "deploying the image on $params.ENVIRONMENT"
