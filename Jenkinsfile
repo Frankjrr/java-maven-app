@@ -15,9 +15,6 @@ pipeline {
             }
         }
         stage("deploy") {
-            input(message: 'Do you want to proceed?',
-            ok: 'Yes',
-            parameters: [booleanParam(defaultValue: true, description: 'Proceed?')])
             steps {
                 script {
                     echo "deploying the image"
