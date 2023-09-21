@@ -16,13 +16,11 @@ pipeline {
             steps {
                 script {
                 echo "building image"
-                withCredentials([usernamePassword(credentialsID: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'echo "Username: $USERNAME"'
-                    sh 'echo "Password: $PASSWORD"'
-                    sh 'docker build -t hassantariq14351/demo-app:aht-1 .'
-                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
-                    sh 'docker push  hassantariq14351/demo-app:aht-1'
-                }
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                sh 'docker build -t  hassantariq14351/demo-app:aht-2.0 .'
+                sh "echo $PASS | docker login -u $USER --password-stdin"
+                sh 'docker push  hassantariq14351/demo-app:aht-2.0'
+                    }
                 }
             }
         }
