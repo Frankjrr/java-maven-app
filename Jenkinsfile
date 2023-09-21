@@ -10,12 +10,11 @@
         stages {
             stage("build jar") {
                 environment {
-                                    MY_VAR = '2.23'
+                    MY_VAR = '2.23'
                 }
                 steps {
                     script {
                         echo "building jar for  version = $MY_VAR"
-                        sh 'mvn package'
                     }
                 }
             }
