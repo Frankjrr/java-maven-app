@@ -8,7 +8,7 @@
         }
         
         stages {
-        environment {
+            environment {
                     MY_VAR = '2.23'
                 }
             stage("build jar") {
