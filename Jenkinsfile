@@ -3,10 +3,6 @@
         tools {
             maven  'maven-latest' // Use the tool name defined in Jenkins configuration
         }
-        parameters {
-            choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select the environment')
-        }
-        
         stages {
             stage("build jar") {
                 environment {
@@ -15,6 +11,7 @@
                 steps {
                     script {
                         echo "building jar for  version = $MY_VAR"
+                        sh 'mvn package'
                     }
                 }
             }
@@ -31,10 +28,13 @@
                 }
             }
             stage("deploy") {
+                parameters {
+                        choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select the environment')
+                    }
                 steps {
                     script {
                         echo "deploying the image"
-                        echo "deploying the image on ${params.ENVIRONMENT}"
+                        echo "deploying the image on $params.ENVIRONMENT"
                     }
                 }
             }
