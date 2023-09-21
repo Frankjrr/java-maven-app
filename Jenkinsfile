@@ -1,9 +1,18 @@
 pipeline {
     agent any
+    stages {
+        stage("init") {
+            steps {
+                script {
+                   sh 'npm --version'
+                }
+            }
+        }
         stage("build jar") {
             steps {
                 script {
                     echo "building jar"
+                   
                 }
             }
         }
@@ -11,6 +20,7 @@ pipeline {
             steps {
                 script {
                     echo "building image"
+                    
                 }
             }
         }
@@ -18,8 +28,9 @@ pipeline {
             steps {
                 script {
                     echo "deploying the image"
-
+                   
                 }
             }
         }
-    }
+    }   
+}
