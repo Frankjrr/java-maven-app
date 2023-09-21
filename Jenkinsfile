@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                 echo "building image"
-                withCredentials([usernamePassword(credentials: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsID: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo "Username: $USERNAME"'
                     sh 'echo "Password: $PASSWORD"'
                 }
