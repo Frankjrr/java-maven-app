@@ -14,7 +14,7 @@
                 steps {
                     script {
                         echo "building jar for  version = $MY_VAR"
-                        sh 'mvn package'
+                        sh 'mvn clean package'
                     }
                 }
             }
