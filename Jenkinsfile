@@ -21,7 +21,7 @@
             stage("Static code analysis: Sonarqube") {
                 steps {
                     script {
-                        withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+                        withSonarQubeEnv(credentialsId: 'sonarqube-token') 
                         sh "mvn sonar:sonar"
                     }
                 }
