@@ -18,22 +18,7 @@
                     }
                 }
             }
-            stage("Static code analysis: Sonarqube") {
-                steps {
-                    script {
-                        withSonarQubeEnv(credentialsId: 'sonarqube-token'){
-                        sh "mvn sonar:sonar"
-                    }
-                }
-            }
-            }
-            stage("Quality Gate Status Check : Sonarqube") {
-                steps {
-                    script {
-                       waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-token'
-                    }
-                }
-            }
+            
             stage("Build Application") {
                 steps {
                     script {
