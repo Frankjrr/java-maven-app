@@ -3,28 +3,44 @@
         tools {
             maven  'maven-latest' // Use the tool name defined in Jenkins configuration
         }
-        parameters {
-                 choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select the environment')
-        }
         stages {
-            stage("build jar") {
-                environment {
-                    MY_VAR = '2.23'
-                }
+            stage("Unit testing Maven") {
                 steps {
                     script {
-                        echo "building jar for  version = $MY_VAR"
+                        sh 'mvn test'
+                    }
+                }
+            }
+            stage("Integration Test maven") {
+                steps {
+                    script {
+                        sh 'mvn verify -DskipUnitTests'
+                    }
+                }
+            }
+            stage("Static code analysis: Sonarqube") {
+                steps {
+                    script {
+                        withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+            }
+            stage("Quality Gate Status Check : Sonarqube") {
+                steps {
+                    script {
+                       waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-token'
+                    }
+                }
+            }
+            stage("Build Application") {
+                steps {
+                    script {
                         sh 'mvn clean package'
                     }
                 }
             }
             stage("build image") {
-                input{
-                    message "Do you want to proceed?"
-                    ok "Yes"
-                    parameters {
-                        choice(name: 'VERSION', choices: ['1', '2', '3'], description: 'Select the version')
-                }}
                 steps {
                     script {
                     echo "building image"
@@ -40,7 +56,6 @@
                 steps {
                     script {
                         echo "deploying the image"
-                        echo "deploying the image on $params.ENVIRONMENT"
                     }
                 }
             }
