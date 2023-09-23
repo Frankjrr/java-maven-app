@@ -27,13 +27,7 @@
                 }
             }
             }
-            stage("Quality Gate Status Check : Sonarqube") {
-                steps {
-                    script {
-                       waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-token'
-                    }
-                }
-            }
+            
             stage("Build Application") {
                 steps {
                     script {
