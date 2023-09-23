@@ -1,5 +1,8 @@
 pipeline {
     agent any
+     tools {
+            maven  'maven-latest' // Use the tool name defined in Jenkins configuration
+        }
     stages {
         stage("init") {
             steps {
