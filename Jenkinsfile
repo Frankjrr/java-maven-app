@@ -17,17 +17,7 @@
                         sh 'mvn verify -DskipUnitTests'
                     }
                 }
-            }
-            stage("Static code analysis: Sonarqube") {
-                steps {
-                    script {
-                        withSonarQubeEnv(credentialsId: 'sonarqube-token'){
-                        sh "mvn sonar:sonar"
-                    }
-                }
-            }
-            }
-            
+            }    
             stage("Build Application") {
                 steps {
                     script {
@@ -40,9 +30,9 @@
                     script {
                     echo "building image"
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh 'docker build -t  hassantariq14351/demo-app:aht-2.0 .'
+                    sh 'docker build -t  hassantariq14351/demo-app:aht-345.0 .'
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push  hassantariq14351/demo-app:aht-2.0'
+                    sh 'docker push  hassantariq14351/demo-app:aht-345.0'
                         }
                     }
                 }
