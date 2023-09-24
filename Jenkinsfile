@@ -17,7 +17,7 @@
                         sh 'mvn verify -DskipUnitTests'
                     }
                 }
-            }    
+            }
             stage("Build Application") {
                 steps {
                     script {
@@ -30,9 +30,9 @@
                     script {
                     echo "building image"
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh 'docker build -t  hassantariq14351/demo-app:aht-345.0 .'
+                    sh 'docker build -t  hassantariq14351/demo-app:aht-2.0 .'
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push  hassantariq14351/demo-app:aht-345.0'
+                    sh 'docker push  hassantariq14351/demo-app:aht-2.0'
                         }
                     }
                 }
@@ -40,7 +40,11 @@
             stage("deploy") {
                 steps {
                     script {
+                        def dockerCMD = 'docker run --name some-redis -d redis'
                         echo "deploying the image"
+                        sshagent(['ec2-key']) {
+                            sh 'ssh ubuntu@ec2-51-20-44-116 ${dockerCMD}'
+                        }
                     }
                 }
             }
